@@ -26,7 +26,6 @@ services:
       - "tr_php-mysql-docker-on-udemy_data:/var/lib/mysql"
       - "./docker-pmdou/db/init:/docker-entrypoint-initdb.d"
       - "./docker-pmdou/db/my.cnf:/etc/mysql/conf.d/my.cnf"
-    restart: always
 
 volumes:
   tr_php-mysql-docker-on-udemy_data:
