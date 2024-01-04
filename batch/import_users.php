@@ -1,4 +1,11 @@
 <?php
+
+require_once("library/log.php");
+
+$logFile = __DIR__ . "/log/import_users.log";
+writeLog($logFile, "社員情報登録バッチ 開始");
+$dataCount = 0;
+
 // データベース接続
 $username = "udemy_user";
 $password = "udemy_pass";
@@ -90,6 +97,7 @@ try {
         );
         $stmt = $pdo->prepare($sql);
         $stmt->execute($param);
+        $dataCount++;
         // 社員情報登録SQLの実行
     }
 
@@ -100,6 +108,9 @@ try {
     fclose($fp);
 } catch (PDOException $e) {
     $pdo->rollback();
-    echo "Error: " . $e->getMessage();
+    $dataCount = 0;
+    writeLog($logFile, "エラーが発生しました。" . $e->getMessage());
 }
+
+writeLog($logFile, "社員情報登録バッチ 終了[処理件数：{$dataCount}件]");
 ?>
